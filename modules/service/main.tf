@@ -986,7 +986,7 @@ data "aws_iam_policy_document" "task_exec" {
   }
 
   dynamic "statement" {
-    for_each = var.task_exec_iam_statements != null ? var.task_exec_iam_statements : []
+    for_each = try(var.task_exec_iam_statements, [])
 
     content {
       sid           = statement.value.sid
@@ -997,7 +997,7 @@ data "aws_iam_policy_document" "task_exec" {
       not_resources = statement.value.not_resources
 
       dynamic "principals" {
-        for_each = statement.value.principals != null ? statement.value.principals : []
+        for_each = try(statement.value.principals, [])
 
         content {
           type        = principals.value.type
@@ -1006,7 +1006,7 @@ data "aws_iam_policy_document" "task_exec" {
       }
 
       dynamic "not_principals" {
-        for_each = statement.value.not_principals != null ? statement.value.not_principals : []
+        for_each = try(statement.value.not_principals, [])
 
         content {
           type        = not_principals.value.type
@@ -1015,7 +1015,7 @@ data "aws_iam_policy_document" "task_exec" {
       }
 
       dynamic "condition" {
-        for_each = statement.value.conditions != null ? statement.value.conditions : []
+        for_each = try(statement.value.condition, [])
 
         content {
           test     = condition.value.test
@@ -1116,7 +1116,7 @@ data "aws_iam_policy_document" "tasks" {
   }
 
   dynamic "statement" {
-    for_each = var.tasks_iam_role_statements != null ? var.tasks_iam_role_statements : []
+    for_each = try(var.tasks_iam_role_statements, [])
 
     content {
       sid           = statement.value.sid
@@ -1127,7 +1127,7 @@ data "aws_iam_policy_document" "tasks" {
       not_resources = statement.value.not_resources
 
       dynamic "principals" {
-        for_each = statement.value.principals != null ? statement.value.principals : []
+        for_each = try(statement.value.principals, [])
 
         content {
           type        = principals.value.type
@@ -1136,7 +1136,7 @@ data "aws_iam_policy_document" "tasks" {
       }
 
       dynamic "not_principals" {
-        for_each = statement.value.not_principals != null ? statement.value.not_principals : []
+        for_each = try(statement.value.not_principals, [])
 
         content {
           type        = not_principals.value.type
@@ -1145,7 +1145,7 @@ data "aws_iam_policy_document" "tasks" {
       }
 
       dynamic "condition" {
-        for_each = statement.value.conditions != null ? statement.value.conditions : []
+        for_each = try(statement.value.conditions, [])
 
         content {
           test     = condition.value.test
